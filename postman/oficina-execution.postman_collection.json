@@ -1,0 +1,238 @@
+{
+  "info": {
+    "name": "Oficina Execution Service",
+    "description": "Coleção simples para execução local em Development. Preencha variáveis e IDs no Postman; tokens permanecem locais e não devem ser salvos em commits. Valores default apontam apenas para localhost.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health readiness",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/health/ready",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ]
+      },
+      "response": []
+    },
+    {
+      "name": "Consultar serviços",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/internal/catalog/services",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "X-Internal-Token",
+            "value": "{{internalToken}}"
+          }
+        ]
+      },
+      "response": []
+    },
+    {
+      "name": "Consultar peças",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/internal/catalog/parts",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "X-Internal-Token",
+            "value": "{{internalToken}}"
+          }
+        ]
+      },
+      "response": []
+    },
+    {
+      "name": "Consultar cotação",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/internal/catalog/quote",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "X-Internal-Token",
+            "value": "{{internalToken}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"services\": [\n    {\n      \"id\": \"{{serviceId}}\",\n      \"quantity\": 1\n    }\n  ],\n  \"parts\": [\n    {\n      \"id\": \"{{partId}}\",\n      \"quantity\": 1\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Reservar estoque",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/internal/stock/reservations",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "X-Internal-Token",
+            "value": "{{internalToken}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"reservationId\": \"{{reservationId}}\",\n  \"workOrderId\": \"{{workOrderId}}\",\n  \"parts\": [\n    {\n      \"id\": \"{{partId}}\",\n      \"quantity\": 1\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Liberar reserva",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/internal/stock/reservations/{{reservationId}}/release",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "X-Internal-Token",
+            "value": "{{internalToken}}"
+          }
+        ]
+      },
+      "response": []
+    },
+    {
+      "name": "Fila de execuções",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/internal/executions",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "X-Internal-Token",
+            "value": "{{internalToken}}"
+          }
+        ]
+      },
+      "response": []
+    },
+    {
+      "name": "Finalizar reparo",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/internal/executions/{{reservationId}}/finish",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "X-Internal-Token",
+            "value": "{{internalToken}}"
+          }
+        ]
+      },
+      "response": []
+    },
+    {
+      "name": "Recusar reparo",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/internal/executions/{{reservationId}}/reject",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "X-Internal-Token",
+            "value": "{{internalToken}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"reason\": \"Falha de validação\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "internalToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "workOrderId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "reservationId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "serviceId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "partId",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
