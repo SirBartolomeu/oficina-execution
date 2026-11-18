@@ -32,6 +32,14 @@ Os testes PostgreSQL precisam de `EXECUTION_POSTGRES_CONNECTION_STRING`, `EXECUT
 
 ## Deploy
 
-O overlay `k8s/services/execution` inclui Deployment, Service, ServiceAccount, HPA, ConfigMap e probes. O bootstrap da infraestrutura substitui `REPLACE_WITH_*` e cria Secrets/credenciais temporárias fora do Git. `oficina-data-infra` provê o banco e filas; `oficina-k8s-infra` provê o cluster. Consulte a [arquitetura completa](docs/architecture-phase4.md). Nenhum deploy AWS foi comprovado até a execução autorizada.
+O overlay `k8s/services/execution` inclui Deployment, Service, ServiceAccount, HPA, ConfigMap e probes. O bootstrap da infraestrutura substitui `REPLACE_WITH_*` e cria Secrets/credenciais temporárias fora do Git. `oficina-data-infra` provê o banco e filas; `oficina-k8s-infra` provê o cluster. Consulte a [arquitetura completa](docs/architecture-phase4.md). Deploy registrado com sucesso em [execution-ci #6](https://github.com/SirBartolomeu/oficina-execution/actions/runs/44175711626), com cobertura de linhas de 84,54%. A finalização distribuída da Saga na AWS não é declarada por esse workflow.
+
+
+
+## Swagger, Postman e cobertura
+
+- Swagger local (Development): `http://localhost:8080/swagger`.
+- Collection Postman: [postman/oficina-execution.postman_collection.json](postman/oficina-execution.postman_collection.json). As rotas `/internal` exigem `X-Internal-Token`; preencha a variável Postman localmente.
+- Cobertura de linhas registrada: **84,54%**. Evidência e artefato: [execution-ci #6](https://github.com/SirBartolomeu/oficina-execution/actions/runs/44175711626).
 
 Extraído do projeto oficina-mvp, preservando o histórico Git. Sem remote configurado.
